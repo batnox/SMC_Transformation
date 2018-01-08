@@ -1,0 +1,11 @@
+mkdir ~/llvm/llvm/tools/clang/tools/extra/smc
+cp smc.cpp ~/llvm/llvm/tools/clang/tools/extra/smc/
+cp CMakeLists.txt ~/llvm/llvm/tools/clang/tools/extra/smc/
+mkdir ~/llvm/build-release/tests
+cp -r Testcases/* ~/llvm/build-release/tests/
+cd ~/llvm/llvm/tools/clang
+echo 'add_subdirectory(smc)' >> tools/extra/CMakeLists.txt
+cd ~/llvm/build-release
+ninja smc
+bin/smc tests/matrixAdd.cu -- --cuda-host-only -Itests/common/inc
+bin/smc tests/matrixMul.cu -- --cuda-host-only -Itests/common/inc
